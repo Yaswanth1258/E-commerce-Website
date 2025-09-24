@@ -1,0 +1,2907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechHub - Premium Electronics Store</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        /* Page Management */
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            color: #667eea;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box input {
+            padding: 0.5rem 2.5rem 0.5rem 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 25px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        .search-box input:focus {
+            border-color: #667eea;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+        }
+
+        .cart-btn {
+            position: relative;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .cart-btn:hover {
+            background: #5a6fd8;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 80px;
+            padding: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero, .about-hero, .contact-hero, .dashboard-hero {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero h1, .about-hero h1, .contact-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p, .about-hero p, .contact-hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.4);
+        }
+
+        /* About Page Styles */
+        .about-content {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .about-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 15px;
+            background: #f8f9fa;
+            transition: transform 0.3s ease;
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .about-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .about-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .company-story {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .company-story h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+
+        .company-story p {
+            font-size: 1.1rem;
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        /* Contact Page Styles */
+        .contact-content {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-item i {
+            font-size: 1.5rem;
+            color: #667eea;
+            margin-top: 0.25rem;
+        }
+
+        .contact-item h4 {
+            font-size: 1.1rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .contact-form-container h3 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            outline: none;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #667eea;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            background: #5a6fd8;
+        }
+
+        /* Filters */
+        .filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .filter-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filter-group label {
+            font-weight: 500;
+            color: #555;
+        }
+
+        .filter-group select {
+            padding: 0.5rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .filter-group select:focus {
+            border-color: #667eea;
+        }
+
+        /* Product Grid */
+        .products-section h2 {
+            color: white;
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.05);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+        }
+
+        .product-category {
+            color: #667eea;
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .product-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0.5rem 0;
+            color: #333;
+        }
+
+        .product-description {
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: #ffd700;
+        }
+
+        .rating-text {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .product-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .add-to-cart, .book-now {
+            flex: 1;
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .book-now {
+            background: #28a745;
+        }
+
+        .add-to-cart:hover {
+            background: #5a6fd8;
+        }
+
+        .book-now:hover {
+            background: #218838;
+        }
+
+        .wishlist-btn {
+            background: #f8f9fa;
+            border: 2px solid #e1e5e9;
+            color: #666;
+            padding: 0.75rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .wishlist-btn:hover {
+            background: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+        }
+
+        /* Status Tracking */
+        .status-tracker {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .status-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .track-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .status-timeline {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin: 2rem 0;
+        }
+
+        .status-timeline::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #e1e5e9;
+            z-index: 1;
+        }
+
+        .status-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            background: white;
+            padding: 0 1rem;
+        }
+
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e1e5e9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .status-step.completed .status-icon {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-step.active .status-icon {
+            background: #667eea;
+            color: white;
+        }
+
+        .status-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+            color: #666;
+        }
+
+        .status-step.completed .status-label,
+        .status-step.active .status-label {
+            color: #333;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f1f3f4;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #666;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: #f1f3f4;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f1f3f4;
+        }
+
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-title {
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+
+        .cart-item-price {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .qty-btn {
+            background: #f1f3f4;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .qty-btn:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .cart-total {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #f1f3f4;
+            text-align: center;
+        }
+
+        .total-amount {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+            color: white;
+        }
+
+        .spinner {
+            border: 4px solid rgba(255,255,255,0.3);
+            border-top: 4px solid white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Alert Styles */
+        .alert {
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .alert-warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .hero h1, .about-hero h1, .contact-hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p, .about-hero p, .contact-hero p {
+                font-size: 1rem;
+            }
+
+            .filter-row {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+
+            .container {
+                padding: 0 1rem;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-content, .contact-content {
+                padding: 2rem;
+            }
+
+            .status-timeline {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .status-timeline::before {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero, .about-hero, .contact-hero {
+                padding: 2rem 1rem;
+            }
+
+            .modal-content {
+                padding: 1rem;
+                width: 95%;
+            }
+
+            .cart-item {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Performance Optimizations */
+        .lazy-load {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lazy-load.loaded {
+            opacity: 1;
+        }
+
+        /* Dashboard Styles */
+        .dashboard-content {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            animation: slideInUp 0.6s ease-out;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .glass-card:hover::before {
+            left: 100%;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-header h3 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .card-header i {
+            color: #667eea;
+        }
+
+        /* Order and Booking Lists */
+        .orders-list, .bookings-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .order-item, .booking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .order-item:hover, .booking-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .order-info, .booking-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .order-id, .booking-product {
+            color: white;
+            font-weight: 600;
+        }
+
+        .order-date, .booking-date {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+        }
+
+        .order-status, .booking-status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            text-transform: uppercase;
+        }
+
+        .status-processing {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .status-delivered {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+
+        .status-confirmed {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .order-total, .booking-fee {
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .action-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .action-btn:hover {
+            background: rgba(102, 126, 234, 0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.2);
+        }
+
+        .action-btn i {
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+
+        .action-btn span {
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Delivery Info */
+        .delivery-info {
+            padding: 1rem 0;
+        }
+
+        .delivery-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .delivery-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(102, 126, 234, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #667eea;
+            font-size: 1.5rem;
+        }
+
+        .delivery-details {
+            flex: 1;
+        }
+
+        .delivery-title {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .delivery-location {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .delivery-eta {
+            color: #667eea;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -200px 0;
+            }
+            100% {
+                background-position: calc(200px + 100%) 0;
+            }
+        }
+
+        /* Enhanced Product Card Animations */
+        .product-card {
+            animation: slideInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .product-card:nth-child(1) { animation-delay: 0.1s; }
+        .product-card:nth-child(2) { animation-delay: 0.2s; }
+        .product-card:nth-child(3) { animation-delay: 0.3s; }
+        .product-card:nth-child(4) { animation-delay: 0.4s; }
+        .product-card:nth-child(5) { animation-delay: 0.5s; }
+        .product-card:nth-child(6) { animation-delay: 0.6s; }
+
+        /* Interactive Button Effects */
+        .add-to-cart, .book-now, .cta-btn, .submit-btn, .checkout-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add-to-cart::before, .book-now::before, .cta-btn::before, .submit-btn::before, .checkout-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .add-to-cart:hover::before, .book-now:hover::before, .cta-btn:hover::before, .submit-btn:hover::before, .checkout-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Enhanced Glass Morphism for Cards */
+        .about-content, .contact-content {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .filters {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Category Cards */
+        .category-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.2) !important;
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .category-card i {
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover i {
+            transform: scale(1.2);
+            color: #ff6b6b !important;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: rgba(76, 175, 80, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 3000;
+        }
+
+        .notification.show {
+            transform: translateX(0);
+        }
+
+        .notification.error {
+            background: rgba(244, 67, 54, 0.9);
+        }
+
+        .notification.warning {
+            background: rgba(255, 152, 0, 0.9);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav-container">
+            <div class="logo">TechHub</div>
+            <ul class="nav-menu">
+                <li><a onclick="showPage('home')" class="nav-link active">Home</a></li>
+                <li><a onclick="showPage('products')" class="nav-link">Products</a></li>
+                <li><a onclick="showPage('dashboard')" class="nav-link">Dashboard</a></li>
+                <li><a onclick="showPage('about')" class="nav-link">About</a></li>
+                <li><a onclick="showPage('contact')" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search products...">
+                    <i class="fas fa-search"></i>
+                </div>
+                <button class="cart-btn" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    Cart
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Home Page -->
+            <div id="homePage" class="page active">
+                <!-- Hero Section -->
+                <section class="hero" id="home">
+                    <h1>Premium Electronics Store</h1>
+                    <p>Discover the latest technology with unbeatable prices and quality</p>
+                    <button class="cta-btn" onclick="showPage('products')">Shop Now</button>
+                </section>
+
+                <!-- Featured Categories -->
+                <section class="featured-categories">
+                    <h2 style="color: white; text-align: center; margin-bottom: 2rem;">Shop by Category</h2>
+                    <div class="categories-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+                        <div class="category-card glass-card" onclick="showCategoryProducts('smartphones')" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(15px); border-radius: 15px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2);">
+                            <i class="fas fa-mobile-alt" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+                            <h3 style="color: white; margin-bottom: 0.5rem;">Smartphones</h3>
+                            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Latest mobile technology</p>
+                        </div>
+                        <div class="category-card glass-card" onclick="showCategoryProducts('laptops')" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(15px); border-radius: 15px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2);">
+                            <i class="fas fa-laptop" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+                            <h3 style="color: white; margin-bottom: 0.5rem;">Laptops</h3>
+                            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Powerful computing devices</p>
+                        </div>
+                        <div class="category-card glass-card" onclick="showCategoryProducts('headphones')" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(15px); border-radius: 15px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2);">
+                            <i class="fas fa-headphones" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+                            <h3 style="color: white; margin-bottom: 0.5rem;">Audio</h3>
+                            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Premium sound experience</p>
+                        </div>
+                        <div class="category-card glass-card" onclick="showCategoryProducts('gaming')" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(15px); border-radius: 15px; padding: 2rem; text-align: center; cursor: pointer; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.2);">
+                            <i class="fas fa-gamepad" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+                            <h3 style="color: white; margin-bottom: 0.5rem;">Gaming</h3>
+                            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">Next-gen gaming gear</p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Products Page -->
+            <div id="productsPage" class="page">
+                <section class="hero">
+                    <h1>Our Products</h1>
+                    <p>Explore our complete collection of premium electronics</p>
+                </section>
+
+                <!-- Filters -->
+                <section class="filters">
+                    <div class="filter-row">
+                        <div class="filter-group">
+                            <label for="categoryFilter">Category:</label>
+                            <select id="categoryFilter" onchange="filterProducts()">
+                                <option value="">All Categories</option>
+                                <option value="smartphones">Smartphones</option>
+                                <option value="laptops">Laptops</option>
+                                <option value="headphones">Headphones</option>
+                                <option value="tablets">Tablets</option>
+                                <option value="smartwatches">Smartwatches</option>
+                                <option value="gaming">Gaming</option>
+                                <option value="cameras">Cameras</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="priceFilter">Price Range:</label>
+                            <select id="priceFilter" onchange="filterProducts()">
+                                <option value="">All Prices</option>
+                                <option value="0-500">$0 - $500</option>
+                                <option value="500-1000">$500 - $1000</option>
+                                <option value="1000-2000">$1000 - $2000</option>
+                                <option value="2000+">$2000+</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="sortFilter">Sort by:</label>
+                            <select id="sortFilter" onchange="filterProducts()">
+                                <option value="name">Name</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="rating">Rating</option>
+                            </select>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Products Section -->
+                <section class="products-section" id="products">
+                    <h2>All Products</h2>
+                    <div class="loading" id="loading">
+                        <div class="spinner"></div>
+                        <p>Loading amazing products...</p>
+                    </div>
+                    <div class="products-grid" id="productsGrid"></div>
+                </section>
+            </div>
+
+            <!-- About Page -->
+            <div id="aboutPage" class="page">
+                <section class="about-hero">
+                    <h1>About TechHub</h1>
+                    <p>Your trusted partner in premium electronics since 2020</p>
+                </section>
+                
+                <div class="about-content">
+                    <div class="about-grid">
+                        <div class="about-card">
+                            <div class="about-icon">
+                                <i class="fas fa-award"></i>
+                            </div>
+                            <h3>Premium Quality</h3>
+                            <p>We source only the highest quality electronics from trusted manufacturers worldwide.</p>
+                        </div>
+                        <div class="about-card">
+                            <div class="about-icon">
+                                <i class="fas fa-shipping-fast"></i>
+                            </div>
+                            <h3>Fast Delivery</h3>
+                            <p>Express shipping options available with real-time tracking for all your orders.</p>
+                        </div>
+                        <div class="about-card">
+                            <div class="about-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <h3>24/7 Support</h3>
+                            <p>Our expert support team is available around the clock to assist you.</p>
+                        </div>
+                        <div class="about-card">
+                            <div class="about-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3>Warranty Protection</h3>
+                            <p>Comprehensive warranty coverage on all products with hassle-free claims.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="company-story">
+                        <h2>Our Story</h2>
+                        <p>Founded in 2020, TechHub began as a small startup with a big vision: to make premium electronics accessible to everyone. Today, we've grown into a trusted retailer serving customers worldwide, but our commitment to quality and customer satisfaction remains unchanged.</p>
+                        <p>We believe technology should enhance your life, not complicate it. That's why we carefully curate our product selection and provide expert guidance to help you make the right choice.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dashboard Page -->
+            <div id="dashboardPage" class="page">
+                <section class="dashboard-hero">
+                    <h1>Dashboard</h1>
+                    <p>Track your orders, bookings, and manage your account</p>
+                </section>
+                
+                <div class="dashboard-content">
+                    <div class="dashboard-grid">
+                        <!-- Order Tracking Card -->
+                        <div class="dashboard-card glass-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-truck"></i> Order Tracking</h3>
+                                <button class="track-btn" onclick="showTrackingModal()">Track New Order</button>
+                            </div>
+                            <div class="status-timeline">
+                                <div class="status-step completed">
+                                    <div class="status-icon">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div class="status-label">Order Placed</div>
+                                </div>
+                                <div class="status-step completed">
+                                    <div class="status-icon">
+                                        <i class="fas fa-credit-card"></i>
+                                    </div>
+                                    <div class="status-label">Payment Confirmed</div>
+                                </div>
+                                <div class="status-step active">
+                                    <div class="status-icon">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                    <div class="status-label">Processing</div>
+                                </div>
+                                <div class="status-step">
+                                    <div class="status-icon">
+                                        <i class="fas fa-truck"></i>
+                                    </div>
+                                    <div class="status-label">Shipped</div>
+                                </div>
+                                <div class="status-step">
+                                    <div class="status-icon">
+                                        <i class="fas fa-home"></i>
+                                    </div>
+                                    <div class="status-label">Delivered</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Orders Card -->
+                        <div class="dashboard-card glass-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-shopping-bag"></i> Recent Orders</h3>
+                            </div>
+                            <div class="orders-list" id="recentOrdersList">
+                                <div class="order-item">
+                                    <div class="order-info">
+                                        <div class="order-id">Order #TH1234567890</div>
+                                        <div class="order-date">January 10, 2024</div>
+                                        <div class="order-status status-processing">Processing</div>
+                                    </div>
+                                    <div class="order-total">$1,199.00</div>
+                                </div>
+                                <div class="order-item">
+                                    <div class="order-info">
+                                        <div class="order-id">Order #TH1234567889</div>
+                                        <div class="order-date">January 8, 2024</div>
+                                        <div class="order-status status-delivered">Delivered</div>
+                                    </div>
+                                    <div class="order-total">$249.00</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Bookings Card -->
+                        <div class="dashboard-card glass-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-calendar-check"></i> Active Bookings</h3>
+                            </div>
+                            <div class="bookings-list" id="activeBookingsList">
+                                <div class="booking-item">
+                                    <div class="booking-info">
+                                        <div class="booking-product">iPhone 15 Pro</div>
+                                        <div class="booking-date">Delivery: Jan 15, 2024</div>
+                                        <div class="booking-status status-confirmed">Confirmed</div>
+                                    </div>
+                                    <div class="booking-fee">$50 paid</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Account Stats Card -->
+                        <div class="dashboard-card glass-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-chart-line"></i> Account Overview</h3>
+                            </div>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <div class="stat-number stat-orders">0</div>
+                                    <div class="stat-label">Total Orders</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number stat-bookings">0</div>
+                                    <div class="stat-label">Active Bookings</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number stat-spent">$0</div>
+                                    <div class="stat-label">Total Spent</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="stat-number stat-wishlist">8</div>
+                                    <div class="stat-label">Wishlist Items</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Quick Actions Card -->
+                        <div class="dashboard-card glass-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                            </div>
+                            <div class="quick-actions">
+                                <button class="action-btn" onclick="quickShopProducts()">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    <span>Shop Products</span>
+                                </button>
+                                <button class="action-btn" onclick="quickViewCart()">
+                                    <i class="fas fa-eye"></i>
+                                    <span>View Cart</span>
+                                </button>
+                                <button class="action-btn" onclick="quickContactSupport()">
+                                    <i class="fas fa-headset"></i>
+                                    <span>Contact Support</span>
+                                </button>
+                                <button class="action-btn" onclick="quickTrackOrder()">
+                                    <i class="fas fa-search"></i>
+                                    <span>Track Order</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Delivery Status Card -->
+                        <div class="dashboard-card glass-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-map-marker-alt"></i> Delivery Status</h3>
+                            </div>
+                            <div class="delivery-info">
+                                <div class="delivery-item">
+                                    <div class="delivery-icon">
+                                        <i class="fas fa-box"></i>
+                                    </div>
+                                    <div class="delivery-details">
+                                        <div class="delivery-title">Package in Transit</div>
+                                        <div class="delivery-location">Distribution Center - Digital City</div>
+                                        <div class="delivery-eta">ETA: Tomorrow, 2:00 PM</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Page -->
+            <div id="contactPage" class="page">
+                <section class="contact-hero">
+                    <h1>Get in Touch</h1>
+                    <p>We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+                </section>
+                
+                <div class="contact-content">
+                    <div class="contact-grid">
+                        <div class="contact-info">
+                            <h3>Contact Information</h3>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div>
+                                    <h4>Address</h4>
+                                    <p>123 Tech Street, Digital City, TC 12345</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <div>
+                                    <h4>Phone</h4>
+                                    <p>+1 (555) 123-4567</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <h4>Email</h4>
+                                    <p>support@techhub.com</p>
+                                </div>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <h4>Business Hours</h4>
+                                    <p>Mon - Fri: 9:00 AM - 6:00 PM<br>Sat - Sun: 10:00 AM - 4:00 PM</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="contact-form-container">
+                            <form class="contact-form" onsubmit="submitContactForm(event)">
+                                <h3>Send us a Message</h3>
+                                <div class="form-group">
+                                    <label for="contactName">Full Name</label>
+                                    <input type="text" id="contactName" name="name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactEmail">Email Address</label>
+                                    <input type="email" id="contactEmail" name="email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactSubject">Subject</label>
+                                    <select id="contactSubject" name="subject" required>
+                                        <option value="">Select a subject</option>
+                                        <option value="general">General Inquiry</option>
+                                        <option value="support">Technical Support</option>
+                                        <option value="booking">Product Booking</option>
+                                        <option value="delivery">Delivery Status</option>
+                                        <option value="warranty">Warranty Claim</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="contactMessage">Message</label>
+                                    <textarea id="contactMessage" name="message" rows="5" required></textarea>
+                                </div>
+                                <button type="submit" class="submit-btn">Send Message</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Shopping Cart</h3>
+                <button class="close-btn" onclick="toggleCart()">&times;</button>
+            </div>
+            <div id="cartItems"></div>
+            <div class="cart-total">
+                <div class="total-amount">Total: $<span id="totalAmount">0.00</span></div>
+                <button class="checkout-btn" onclick="checkout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div class="modal" id="bookingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Book Product</h3>
+                <button class="close-btn" onclick="closeBookingModal()">&times;</button>
+            </div>
+            <div id="bookingContent">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Reserve this product with a small booking fee. Full payment due on delivery.</span>
+                </div>
+                <form onsubmit="confirmBooking(event)">
+                    <div class="form-group">
+                        <label for="bookingName">Full Name</label>
+                        <input type="text" id="bookingName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingPhone">Phone Number</label>
+                        <input type="tel" id="bookingPhone" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingAddress">Delivery Address</label>
+                        <textarea id="bookingAddress" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bookingDate">Preferred Delivery Date</label>
+                        <input type="date" id="bookingDate" required>
+                    </div>
+                    <button type="submit" class="submit-btn">Confirm Booking ($50 booking fee)</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tracking Modal -->
+    <div class="modal" id="trackingModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Order Tracking</h3>
+                <button class="close-btn" onclick="closeTrackingModal()">&times;</button>
+            </div>
+            <div id="trackingContent">
+                <div class="form-group">
+                    <label for="trackingNumber">Enter Tracking Number</label>
+                    <input type="text" id="trackingNumber" placeholder="e.g., TH123456789">
+                </div>
+                <button onclick="trackOrder()" class="submit-btn">Track Order</button>
+                <div id="trackingResults" style="margin-top: 2rem;"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        // Expanded Product Data with Real Images
+        const products = [
+            // Smartphones
+            {
+                id: 1,
+                name: "iPhone 15 Pro",
+                category: "smartphones",
+                price: 1199,
+                image: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=400&h=300&fit=crop",
+                description: "Latest iPhone with titanium design and advanced camera system",
+                rating: 4.8,
+                reviews: 1250,
+                brand: "Apple"
+            },
+            {
+                id: 2,
+                name: "Samsung Galaxy S24 Ultra",
+                category: "smartphones",
+                price: 1299,
+                image: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=400&h=300&fit=crop",
+                description: "Android flagship with S Pen and 200MP camera",
+                rating: 4.7,
+                reviews: 950,
+                brand: "Samsung"
+            },
+            {
+                id: 3,
+                name: "Google Pixel 8 Pro",
+                category: "smartphones",
+                price: 999,
+                image: "https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?w=400&h=300&fit=crop",
+                description: "AI-powered photography with pure Android experience",
+                rating: 4.6,
+                reviews: 780,
+                brand: "Google"
+            },
+            {
+                id: 4,
+                name: "OnePlus 12",
+                category: "smartphones",
+                price: 799,
+                image: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=400&h=300&fit=crop",
+                description: "Fast charging flagship with premium design",
+                rating: 4.5,
+                reviews: 650,
+                brand: "OnePlus"
+            },
+            {
+                id: 5,
+                name: "Xiaomi 14 Ultra",
+                category: "smartphones",
+                price: 899,
+                image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=400&h=300&fit=crop",
+                description: "Photography-focused flagship with Leica cameras",
+                rating: 4.4,
+                reviews: 520,
+                brand: "Xiaomi"
+            },
+            
+            // Laptops
+            {
+                id: 6,
+                name: "MacBook Pro M3",
+                category: "laptops",
+                price: 2399,
+                image: "https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400&h=300&fit=crop",
+                description: "Powerful laptop with M3 chip for professional workflows",
+                rating: 4.9,
+                reviews: 890,
+                brand: "Apple"
+            },
+            {
+                id: 7,
+                name: "Dell XPS 13 Plus",
+                category: "laptops",
+                price: 1299,
+                image: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=400&h=300&fit=crop",
+                description: "Ultra-portable laptop with stunning InfinityEdge display",
+                rating: 4.4,
+                reviews: 720,
+                brand: "Dell"
+            },
+            {
+                id: 8,
+                name: "ThinkPad X1 Carbon",
+                category: "laptops",
+                price: 1599,
+                image: "https://images.unsplash.com/photo-1541807084-5c52b6b3adef?w=400&h=300&fit=crop",
+                description: "Business laptop with legendary keyboard and durability",
+                rating: 4.6,
+                reviews: 850,
+                brand: "Lenovo"
+            },
+            {
+                id: 9,
+                name: "HP Spectre x360",
+                category: "laptops",
+                price: 1199,
+                image: "https://images.unsplash.com/photo-1588872657578-7efd1f1555ed?w=400&h=300&fit=crop",
+                description: "2-in-1 convertible laptop with premium design",
+                rating: 4.3,
+                reviews: 640,
+                brand: "HP"
+            },
+            {
+                id: 10,
+                name: "ASUS ROG Zephyrus G14",
+                category: "laptops",
+                price: 1799,
+                image: "https://images.unsplash.com/photo-1603302576837-37561b2e2302?w=400&h=300&fit=crop",
+                description: "Gaming laptop with AMD Ryzen and RTX graphics",
+                rating: 4.7,
+                reviews: 920,
+                brand: "ASUS"
+            },
+            {
+                id: 11,
+                name: "Surface Laptop Studio 2",
+                category: "laptops",
+                price: 1999,
+                image: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&h=300&fit=crop",
+                description: "Creative powerhouse with unique hinge design",
+                rating: 4.5,
+                reviews: 480,
+                brand: "Microsoft"
+            },
+            
+            // Headphones
+            {
+                id: 12,
+                name: "AirPods Pro 2",
+                category: "headphones",
+                price: 249,
+                image: "https://images.unsplash.com/photo-1606220945770-b5b6c2c55bf1?w=400&h=300&fit=crop",
+                description: "Premium wireless earbuds with active noise cancellation",
+                rating: 4.7,
+                reviews: 2100,
+                brand: "Apple"
+            },
+            {
+                id: 13,
+                name: "Sony WH-1000XM5",
+                category: "headphones",
+                price: 399,
+                image: "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=400&h=300&fit=crop",
+                description: "Industry-leading noise canceling wireless headphones",
+                rating: 4.8,
+                reviews: 1650,
+                brand: "Sony"
+            },
+            {
+                id: 14,
+                name: "Bose QuietComfort Ultra",
+                category: "headphones",
+                price: 429,
+                image: "https://images.unsplash.com/photo-1484704849700-f032a568e944?w=400&h=300&fit=crop",
+                description: "Premium comfort with world-class noise cancellation",
+                rating: 4.6,
+                reviews: 1200,
+                brand: "Bose"
+            },
+            {
+                id: 15,
+                name: "Sennheiser Momentum 4",
+                category: "headphones",
+                price: 349,
+                image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&h=300&fit=crop",
+                description: "Audiophile-grade sound with 60-hour battery life",
+                rating: 4.5,
+                reviews: 890,
+                brand: "Sennheiser"
+            },
+            {
+                id: 16,
+                name: "Audio-Technica ATH-M50xBT2",
+                category: "headphones",
+                price: 199,
+                image: "https://images.unsplash.com/photo-1558756520-22cfe5d382ca?w=400&h=300&fit=crop",
+                description: "Studio-quality wireless headphones for professionals",
+                rating: 4.4,
+                reviews: 750,
+                brand: "Audio-Technica"
+            },
+            {
+                id: 17,
+                name: "Beats Studio Pro",
+                category: "headphones",
+                price: 349,
+                image: "https://images.unsplash.com/photo-1577174881658-0f30ed549adc?w=400&h=300&fit=crop",
+                description: "Premium wireless headphones with spatial audio",
+                rating: 4.3,
+                reviews: 680,
+                brand: "Beats"
+            },
+            
+            // Tablets
+            {
+                id: 18,
+                name: "iPad Pro 12.9",
+                category: "tablets",
+                price: 1099,
+                image: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=400&h=300&fit=crop",
+                description: "Professional tablet with M2 chip and Liquid Retina display",
+                rating: 4.8,
+                reviews: 1580,
+                brand: "Apple"
+            },
+            {
+                id: 19,
+                name: "iPad Air 5th Gen",
+                category: "tablets",
+                price: 749,
+                image: "https://images.unsplash.com/photo-1561154464-82e9adf32764?w=400&h=300&fit=crop",
+                description: "Versatile tablet perfect for creativity and productivity",
+                rating: 4.6,
+                reviews: 1200,
+                brand: "Apple"
+            },
+            {
+                id: 20,
+                name: "Samsung Galaxy Tab S9 Ultra",
+                category: "tablets",
+                price: 1199,
+                image: "https://images.unsplash.com/photo-1609081219090-a6d81d3085bf?w=400&h=300&fit=crop",
+                description: "Large Android tablet with S Pen included",
+                rating: 4.5,
+                reviews: 890,
+                brand: "Samsung"
+            },
+            {
+                id: 21,
+                name: "Microsoft Surface Pro 9",
+                category: "tablets",
+                price: 999,
+                image: "https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?w=400&h=300&fit=crop",
+                description: "2-in-1 tablet and laptop with professional performance",
+                rating: 4.3,
+                reviews: 680,
+                brand: "Microsoft"
+            },
+            
+            // Smartwatches
+            {
+                id: 22,
+                name: "Apple Watch Series 9",
+                category: "smartwatches",
+                price: 399,
+                image: "https://images.unsplash.com/photo-1434493789847-2f02dc6ca35d?w=400&h=300&fit=crop",
+                description: "Advanced health monitoring with bright Always-On display",
+                rating: 4.7,
+                reviews: 1850,
+                brand: "Apple"
+            },
+            {
+                id: 23,
+                name: "Samsung Galaxy Watch 6",
+                category: "smartwatches",
+                price: 329,
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&h=300&fit=crop",
+                description: "Comprehensive health tracking with rotating bezel",
+                rating: 4.4,
+                reviews: 920,
+                brand: "Samsung"
+            },
+            {
+                id: 24,
+                name: "Garmin Fenix 7X",
+                category: "smartwatches",
+                price: 799,
+                image: "https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=400&h=300&fit=crop",
+                description: "Rugged GPS watch for outdoor adventures",
+                rating: 4.6,
+                reviews: 650,
+                brand: "Garmin"
+            },
+            
+            // Gaming
+            {
+                id: 25,
+                name: "PlayStation 5",
+                category: "gaming",
+                price: 499,
+                image: "https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?w=400&h=300&fit=crop",
+                description: "Next-gen gaming console with 4K gaming",
+                rating: 4.8,
+                reviews: 2500,
+                brand: "Sony"
+            },
+            {
+                id: 26,
+                name: "Xbox Series X",
+                category: "gaming",
+                price: 499,
+                image: "https://images.unsplash.com/photo-1621259182978-fbf93132d53d?w=400&h=300&fit=crop",
+                description: "Powerful gaming console with Game Pass",
+                rating: 4.7,
+                reviews: 2200,
+                brand: "Microsoft"
+            },
+            {
+                id: 27,
+                name: "Nintendo Switch OLED",
+                category: "gaming",
+                price: 349,
+                image: "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=400&h=300&fit=crop",
+                description: "Portable gaming with vibrant OLED screen",
+                rating: 4.6,
+                reviews: 1800,
+                brand: "Nintendo"
+            },
+            
+            // Cameras
+            {
+                id: 28,
+                name: "Canon EOS R5",
+                category: "cameras",
+                price: 3899,
+                image: "https://images.unsplash.com/photo-1502920917128-1aa500764cbd?w=400&h=300&fit=crop",
+                description: "Professional mirrorless camera with 8K video",
+                rating: 4.9,
+                reviews: 450,
+                brand: "Canon"
+            },
+            {
+                id: 29,
+                name: "Sony A7 IV",
+                category: "cameras",
+                price: 2499,
+                image: "https://images.unsplash.com/photo-1606983340126-99ab4feaa64a?w=400&h=300&fit=crop",
+                description: "Full-frame mirrorless with excellent low-light performance",
+                rating: 4.8,
+                reviews: 680,
+                brand: "Sony"
+            },
+            {
+                id: 30,
+                name: "Fujifilm X-T5",
+                category: "cameras",
+                price: 1699,
+                image: "https://images.unsplash.com/photo-1495121553079-4c61bcce1894?w=400&h=300&fit=crop",
+                description: "Retro-styled camera with film simulation modes",
+                rating: 4.6,
+                reviews: 520,
+                brand: "Fujifilm"
+            }
+        ];
+
+        // Application State
+        let cart = [];
+        let filteredProducts = [...products];
+        let currentBookingProduct = null;
+        let bookings = [];
+        let orders = [];
+
+        // Initialize Application
+        document.addEventListener('DOMContentLoaded', function() {
+            showLoading();
+            setTimeout(() => {
+                hideLoading();
+                renderProducts();
+                setupLazyLoading();
+                setupSearch();
+                updateBookingDate();
+                updateDashboard();
+            }, 1500);
+        });
+
+        // Page Navigation
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            // Show selected page
+            const targetPage = document.getElementById(pageId + 'Page');
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+            
+            // Update navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Find and activate the correct nav link
+            const activeLink = document.querySelector(`[onclick="showPage('${pageId}')"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+            
+            // Special handling for different pages
+            if (pageId === 'products') {
+                // Ensure products are rendered when switching to products page
+                setTimeout(() => {
+                    if (filteredProducts.length === 0) {
+                        filteredProducts = [...products];
+                        renderProducts();
+                    }
+                }, 100);
+            } else if (pageId === 'dashboard') {
+                updateDashboard();
+            }
+        }
+
+        // Contact Form Submission
+        function submitContactForm(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const subject = formData.get('subject');
+            const name = formData.get('name');
+            
+            // Simulate form processing
+            showNotification('Thank you for your message! We\'ll get back to you within 24 hours.', 'success');
+            
+            // Handle different subjects with specific alerts
+            setTimeout(() => {
+                switch(subject) {
+                    case 'booking':
+                        showAlert('Booking Inquiry Received', 'Our booking specialist will contact you within 2 hours to assist with your product reservation.', 'info');
+                        break;
+                    case 'delivery':
+                        showAlert('Delivery Status Inquiry', 'Please use our tracking system above or provide your order number for immediate assistance.', 'info');
+                        break;
+                    case 'support':
+                        showAlert('Technical Support Request', 'Our technical team has been notified and will provide detailed assistance within 4 hours.', 'info');
+                        break;
+                    default:
+                        showAlert('Message Received', `Thank you ${name}! Your inquiry has been forwarded to the appropriate department.`, 'success');
+                }
+            }, 1000);
+            
+            event.target.reset();
+        }
+
+        // Alert System
+        function showAlert(title, message, type = 'info') {
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'}"></i>
+                <div>
+                    <strong>${title}</strong><br>
+                    ${message}
+                </div>
+            `;
+            
+            // Insert at the top of the current page
+            const currentPage = document.querySelector('.page.active');
+            const firstSection = currentPage.querySelector('section');
+            firstSection.parentNode.insertBefore(alertDiv, firstSection.nextSibling);
+            
+            // Remove after 8 seconds
+            setTimeout(() => {
+                alertDiv.remove();
+            }, 8000);
+        }
+
+        // Booking System
+        function bookProduct(productId) {
+            currentBookingProduct = products.find(p => p.id === productId);
+            document.getElementById('bookingModal').style.display = 'block';
+        }
+
+        function closeBookingModal() {
+            document.getElementById('bookingModal').style.display = 'none';
+            currentBookingProduct = null;
+        }
+
+        function confirmBooking(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const booking = {
+                id: Date.now(),
+                product: currentBookingProduct,
+                customerName: formData.get('bookingName') || document.getElementById('bookingName').value,
+                phone: formData.get('bookingPhone') || document.getElementById('bookingPhone').value,
+                address: formData.get('bookingAddress') || document.getElementById('bookingAddress').value,
+                deliveryDate: formData.get('bookingDate') || document.getElementById('bookingDate').value,
+                bookingFee: 50,
+                status: 'confirmed',
+                bookingDate: new Date().toISOString()
+            };
+            
+            bookings.push(booking);
+            closeBookingModal();
+            updateDashboard();
+            
+            showNotification(`Booking confirmed for ${currentBookingProduct.name}!`, 'success');
+            
+            setTimeout(() => {
+                showAlert('Booking Confirmation', 
+                    `🎉 Your booking has been successfully confirmed!<br><br>
+                    <strong>Product:</strong> ${currentBookingProduct.name}<br>
+                    <strong>Booking ID:</strong> BK${booking.id}<br>
+                    <strong>Customer:</strong> ${booking.customerName}<br>
+                    <strong>Delivery Date:</strong> ${booking.deliveryDate}<br>
+                    <strong>Booking Fee Paid:</strong> $${booking.bookingFee}<br>
+                    <strong>Remaining Amount:</strong> $${currentBookingProduct.price - booking.bookingFee} (due on delivery)<br><br>
+                    📧 A confirmation email has been sent to you with all the details.<br>
+                    📱 You can track your booking status in the Dashboard.`, 
+                    'success');
+            }, 1000);
+            
+            // Show dashboard navigation alert
+            setTimeout(() => {
+                showAlert('Track Your Booking', 
+                    'Visit the Dashboard to track your booking status and manage all your orders in one place.', 
+                    'info');
+            }, 8000);
+            
+            // Update booking status after some time
+            setTimeout(() => {
+                updateBookingStatus(booking.id, 'processing');
+            }, 5000);
+        }
+
+        function updateBookingStatus(bookingId, newStatus) {
+            const booking = bookings.find(b => b.id === bookingId);
+            if (booking) {
+                booking.status = newStatus;
+                
+                const statusMessages = {
+                    'processing': 'Your booking is being processed by our team.',
+                    'confirmed': 'Your booking has been confirmed and scheduled.',
+                    'shipped': 'Your product has been shipped and is on the way!',
+                    'delivered': 'Your product has been successfully delivered.'
+                };
+                
+                showNotification(`Booking Update: ${statusMessages[newStatus]}`, 'info');
+            }
+        }
+
+        // Order Tracking System
+        function showTrackingModal() {
+            document.getElementById('trackingModal').style.display = 'block';
+        }
+
+        function closeTrackingModal() {
+            document.getElementById('trackingModal').style.display = 'none';
+        }
+
+        function trackOrder() {
+            const trackingNumber = document.getElementById('trackingNumber').value;
+            const resultsDiv = document.getElementById('trackingResults');
+            
+            if (!trackingNumber) {
+                showNotification('Please enter a tracking number', 'warning');
+                return;
+            }
+            
+            // Simulate tracking lookup
+            resultsDiv.innerHTML = '<div class="spinner" style="width: 30px; height: 30px;"></div>';
+            
+            setTimeout(() => {
+                const mockTrackingData = {
+                    orderNumber: trackingNumber,
+                    status: 'In Transit',
+                    estimatedDelivery: '2024-01-15',
+                    currentLocation: 'Distribution Center - Digital City',
+                    timeline: [
+                        { status: 'Order Placed', date: '2024-01-10', completed: true },
+                        { status: 'Payment Confirmed', date: '2024-01-10', completed: true },
+                        { status: 'Processing', date: '2024-01-11', completed: true },
+                        { status: 'Shipped', date: '2024-01-12', completed: true },
+                        { status: 'In Transit', date: '2024-01-13', completed: true },
+                        { status: 'Out for Delivery', date: '2024-01-15', completed: false },
+                        { status: 'Delivered', date: '2024-01-15', completed: false }
+                    ]
+                };
+                
+                resultsDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        <i class="fas fa-truck"></i>
+                        <div>
+                            <strong>Order Found!</strong><br>
+                            Status: ${mockTrackingData.status}<br>
+                            Current Location: ${mockTrackingData.currentLocation}<br>
+                            Estimated Delivery: ${mockTrackingData.estimatedDelivery}
+                        </div>
+                    </div>
+                    <div class="status-timeline" style="margin-top: 1rem;">
+                        ${mockTrackingData.timeline.map(step => `
+                            <div class="status-step ${step.completed ? 'completed' : ''}">
+                                <div class="status-icon">
+                                    <i class="fas fa-${step.completed ? 'check' : 'clock'}"></i>
+                                </div>
+                                <div class="status-label">${step.status}</div>
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        // Update booking date to tomorrow
+        function updateBookingDate() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const dateString = tomorrow.toISOString().split('T')[0];
+            document.getElementById('bookingDate').min = dateString;
+            document.getElementById('bookingDate').value = dateString;
+        }
+
+        // Loading Functions
+        function showLoading() {
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('productsGrid').style.display = 'none';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('productsGrid').style.display = 'grid';
+        }
+
+        // Product Rendering
+        function renderProducts() {
+            const grid = document.getElementById('productsGrid');
+            grid.innerHTML = '';
+
+            filteredProducts.forEach(product => {
+                const productCard = createProductCard(product);
+                grid.appendChild(productCard);
+            });
+        }
+
+        function createProductCard(product) {
+            const card = document.createElement('div');
+            card.className = 'product-card';
+            card.innerHTML = `
+                <img src="${product.image}" alt="${product.name}" class="product-image lazy-load" 
+                     onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjMwMCIgdmlld0JveD0iMCAwIDQwMCAzMDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI0MDAiIGhlaWdodD0iMzAwIiBmaWxsPSIjRjFGM0Y0Ii8+CjxwYXRoIGQ9Ik0xNzUgMTI1SDE4NVYxNzVIMTc1VjEyNVoiIGZpbGw9IiM5Q0EzQUYiLz4KPHA+SW1hZ2UgTm90IEF2YWlsYWJsZTwvcD4KPC9zdmc+'; this.alt='Image not available';">
+                <div class="product-info">
+                    <div class="product-category">${product.category}</div>
+                    <h3 class="product-title">${product.name}</h3>
+                    <p class="product-description">${product.description}</p>
+                    <div class="product-rating">
+                        <div class="stars">${generateStars(product.rating)}</div>
+                        <span class="rating-text">${product.rating} (${product.reviews} reviews)</span>
+                    </div>
+                    <div class="product-price">$${product.price.toLocaleString()}</div>
+                    <div class="product-actions">
+                        <button class="add-to-cart" onclick="addToCart(${product.id})">
+                            <i class="fas fa-cart-plus"></i> Add to Cart
+                        </button>
+                        <button class="book-now" onclick="bookProduct(${product.id})">
+                            <i class="fas fa-calendar-check"></i> Book Now
+                        </button>
+                        <button class="wishlist-btn" onclick="toggleWishlist(${product.id})">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            return card;
+        }
+
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const hasHalfStar = rating % 1 !== 0;
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            
+            if (hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // Filtering and Sorting
+        function filterProducts() {
+            const categoryFilter = document.getElementById('categoryFilter');
+            const priceFilter = document.getElementById('priceFilter');
+            const sortFilter = document.getElementById('sortFilter');
+            
+            if (!categoryFilter || !priceFilter || !sortFilter) {
+                console.log('Filter elements not found, skipping filter');
+                return;
+            }
+            
+            const category = categoryFilter.value;
+            const priceRange = priceFilter.value;
+            const sortBy = sortFilter.value;
+
+            filteredProducts = products.filter(product => {
+                const categoryMatch = !category || product.category === category;
+                const priceMatch = checkPriceRange(product.price, priceRange);
+                return categoryMatch && priceMatch;
+            });
+
+            sortProducts(sortBy);
+            renderProducts();
+        }
+
+        function checkPriceRange(price, range) {
+            if (!range) return true;
+            
+            if (range === '0-500') return price <= 500;
+            if (range === '500-1000') return price > 500 && price <= 1000;
+            if (range === '1000-2000') return price > 1000 && price <= 2000;
+            if (range === '2000+') return price > 2000;
+            
+            return true;
+        }
+
+        function sortProducts(sortBy) {
+            switch (sortBy) {
+                case 'price-low':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    filteredProducts.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'name':
+                default:
+                    filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+            }
+        }
+
+        // Search Functionality
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            let searchTimeout;
+
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    const query = this.value.toLowerCase();
+                    filteredProducts = products.filter(product => 
+                        product.name.toLowerCase().includes(query) ||
+                        product.description.toLowerCase().includes(query) ||
+                        product.category.toLowerCase().includes(query)
+                    );
+                    renderProducts();
+                }, 300);
+            });
+        }
+
+        // Cart Functionality
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const existingItem = cart.find(item => item.id === productId);
+
+            if (existingItem) {
+                existingItem.quantity += 1;
+                showNotification(`${product.name} quantity updated in cart!`);
+                showAlert('Item Updated', `${product.name} quantity increased to ${existingItem.quantity}. Total cart value: $${cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)}`, 'success');
+            } else {
+                cart.push({ ...product, quantity: 1 });
+                showNotification(`${product.name} added to cart!`);
+                showAlert('Item Added to Cart', `${product.name} has been added to your cart for $${product.price.toLocaleString()}. You now have ${cart.length} different item(s) in your cart.`, 'success');
+            }
+
+            updateCartUI();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCartUI();
+                }
+            }
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItems = document.getElementById('cartItems');
+            const totalAmount = document.getElementById('totalAmount');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = totalItems;
+
+            cartItems.innerHTML = '';
+            let total = 0;
+
+            cart.forEach(item => {
+                total += item.price * item.quantity;
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-image"
+                         onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjRjFGM0Y0Ii8+CjxwYXRoIGQ9Ik0yNSAyNUgzNVYzNUgyNVYyNVoiIGZpbGw9IiM5Q0EzQUYiLz4KPC9zdmc+'; this.alt='Image not available';">
+                    <div class="cart-item-info">
+                        <div class="cart-item-title">${item.name}</div>
+                        <div class="cart-item-price">$${item.price.toLocaleString()}</div>
+                    </div>
+                    <div class="quantity-controls">
+                        <button class="qty-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                        <span>${item.quantity}</span>
+                        <button class="qty-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                    </div>
+                `;
+                cartItems.appendChild(cartItem);
+            });
+
+            totalAmount.textContent = total.toFixed(2);
+        }
+
+        function toggleCart() {
+            const modal = document.getElementById('cartModal');
+            modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function checkout() {
+            if (cart.length === 0) {
+                showNotification('Your cart is empty!', 'error');
+                showAlert('Empty Cart', 'Please add some items to your cart before proceeding to checkout. Browse our amazing products!', 'warning');
+                return;
+            }
+
+            const orderId = 'TH' + Date.now();
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const order = {
+                id: orderId,
+                items: [...cart],
+                total: cart.reduce((sum, item) => sum + (item.price * item.quantity), 0),
+                status: 'confirmed',
+                orderDate: new Date().toISOString()
+            };
+            
+            orders.push(order);
+            updateDashboard();
+            
+            showNotification(`Order ${orderId} placed successfully! Thank you for shopping with TechHub!`, 'success');
+            
+            setTimeout(() => {
+                const itemsList = cart.map(item => `• ${item.name} (Qty: ${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}`).join('<br>');
+                
+                showAlert('🛒 Order Confirmation', 
+                    `🎉 Thank you for your order! Your purchase has been confirmed.<br><br>
+                    <strong>Order Details:</strong><br>
+                    <strong>Order ID:</strong> ${orderId}<br>
+                    <strong>Items Ordered:</strong><br>
+                    ${itemsList}<br><br>
+                    <strong>Total Items:</strong> ${totalItems}<br>
+                    <strong>Total Amount:</strong> $${order.total.toFixed(2)}<br>
+                    <strong>Order Date:</strong> ${new Date().toLocaleDateString()}<br><br>
+                    📦 <strong>Estimated Delivery:</strong> 3-5 business days<br>
+                    📧 Confirmation email sent to your registered email<br>
+                    📱 Track your order anytime in the Dashboard`, 
+                    'success');
+            }, 1000);
+            
+            // Show dashboard navigation reminder
+            setTimeout(() => {
+                showAlert('Order Tracking Available', 
+                    'Your order is now being processed! Visit the Dashboard to track real-time updates and manage all your orders.', 
+                    'info');
+            }, 10000);
+            
+            cart = [];
+            updateCartUI();
+            toggleCart();
+            
+            // Simulate order status updates with notifications
+            setTimeout(() => {
+                updateOrderStatus(orderId, 'processing');
+                showAlert('Order Update', `Order ${orderId} is now being processed by our fulfillment team.`, 'info');
+            }, 3000);
+            
+            setTimeout(() => {
+                updateOrderStatus(orderId, 'shipped');
+                showAlert('Order Shipped! 📦', `Great news! Order ${orderId} has been shipped and is on its way to you. Check the Dashboard for tracking details.`, 'success');
+            }, 8000);
+        }
+
+        // Dashboard Update Functions
+        function updateDashboard() {
+            updateRecentOrders();
+            updateActiveBookings();
+            updateAccountStats();
+        }
+
+        function updateRecentOrders() {
+            const ordersList = document.getElementById('recentOrdersList');
+            if (!ordersList) return;
+            
+            ordersList.innerHTML = '';
+            
+            const recentOrders = orders.slice(-3).reverse();
+            
+            if (recentOrders.length === 0) {
+                ordersList.innerHTML = '<div style="color: rgba(255,255,255,0.7); text-align: center; padding: 2rem;">No orders yet</div>';
+                return;
+            }
+            
+            recentOrders.forEach(order => {
+                const orderItem = document.createElement('div');
+                orderItem.className = 'order-item';
+                orderItem.innerHTML = `
+                    <div class="order-info">
+                        <div class="order-id">Order #${order.id}</div>
+                        <div class="order-date">${new Date(order.orderDate).toLocaleDateString()}</div>
+                        <div class="order-status status-${order.status}">${order.status}</div>
+                    </div>
+                    <div class="order-total">$${order.total.toFixed(2)}</div>
+                `;
+                ordersList.appendChild(orderItem);
+            });
+        }
+
+        function updateActiveBookings() {
+            const bookingsList = document.getElementById('activeBookingsList');
+            if (!bookingsList) return;
+            
+            bookingsList.innerHTML = '';
+            
+            const activeBookings = bookings.filter(booking => booking.status !== 'delivered');
+            
+            if (activeBookings.length === 0) {
+                bookingsList.innerHTML = '<div style="color: rgba(255,255,255,0.7); text-align: center; padding: 2rem;">No active bookings</div>';
+                return;
+            }
+            
+            activeBookings.forEach(booking => {
+                const bookingItem = document.createElement('div');
+                bookingItem.className = 'booking-item';
+                bookingItem.innerHTML = `
+                    <div class="booking-info">
+                        <div class="booking-product">${booking.product.name}</div>
+                        <div class="booking-date">Delivery: ${booking.deliveryDate}</div>
+                        <div class="booking-status status-${booking.status}">${booking.status}</div>
+                    </div>
+                    <div class="booking-fee">$${booking.bookingFee} paid</div>
+                `;
+                bookingsList.appendChild(bookingItem);
+            });
+        }
+
+        function updateAccountStats() {
+            const totalOrders = orders.length;
+            const activeBookingsCount = bookings.filter(b => b.status !== 'delivered').length;
+            const totalSpent = orders.reduce((sum, order) => sum + order.total, 0) + 
+                              bookings.reduce((sum, booking) => sum + booking.bookingFee, 0);
+            
+            // Update stat numbers with animation
+            animateNumber('stat-orders', totalOrders);
+            animateNumber('stat-bookings', activeBookingsCount);
+            animateNumber('stat-spent', totalSpent, true);
+            animateNumber('stat-wishlist', 8); // Static for demo
+        }
+
+        function animateNumber(className, targetValue, isCurrency = false) {
+            const elements = document.querySelectorAll(`.${className}`);
+            elements.forEach(element => {
+                const startValue = parseInt(element.textContent.replace(/[^0-9]/g, '')) || 0;
+                const increment = (targetValue - startValue) / 20;
+                let currentValue = startValue;
+                
+                const timer = setInterval(() => {
+                    currentValue += increment;
+                    if (currentValue >= targetValue) {
+                        currentValue = targetValue;
+                        clearInterval(timer);
+                    }
+                    
+                    const displayValue = isCurrency ? 
+                        `$${Math.floor(currentValue).toLocaleString()}` : 
+                        Math.floor(currentValue).toString();
+                    element.textContent = displayValue;
+                }, 50);
+            });
+        }
+
+        function updateOrderStatus(orderId, newStatus) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = newStatus;
+                
+                const statusMessages = {
+                    'processing': 'Your order is being processed.',
+                    'shipped': 'Your order has been shipped!',
+                    'delivered': 'Your order has been delivered.'
+                };
+                
+                showNotification(`Order Update: ${statusMessages[newStatus]}`, 'info');
+            }
+        }
+
+        // Utility Functions
+        function toggleWishlist(productId) {
+            const product = products.find(p => p.id === productId);
+            showNotification(`${product.name} added to wishlist!`);
+            
+            setTimeout(() => {
+                showAlert('Added to Wishlist ❤️', 
+                    `${product.name} has been saved to your wishlist!<br><br>
+                    <strong>Price:</strong> $${product.price.toLocaleString()}<br>
+                    <strong>Rating:</strong> ${product.rating}/5 stars<br><br>
+                    💡 <strong>Tip:</strong> Wishlist items are saved for easy access later. You can add them to cart anytime!`, 
+                    'success');
+            }, 500);
+        }
+
+        function scrollToProducts() {
+            document.getElementById('products').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        function showCategoryProducts(category) {
+            // Switch to products page
+            showPage('products');
+            
+            // Set the category filter
+            const categoryFilter = document.getElementById('categoryFilter');
+            if (categoryFilter) {
+                categoryFilter.value = category;
+                filterProducts();
+            }
+            
+            // Show alert about category selection
+            setTimeout(() => {
+                const categoryNames = {
+                    'smartphones': 'Smartphones',
+                    'laptops': 'Laptops', 
+                    'headphones': 'Audio & Headphones',
+                    'gaming': 'Gaming Consoles'
+                };
+                
+                showAlert(`${categoryNames[category]} Collection`, 
+                    `Showing all ${categoryNames[category].toLowerCase()} in our premium collection. Use filters to refine your search further.`, 
+                    'info');
+            }, 500);
+        }
+
+        // Quick Action Functions
+        function quickShopProducts() {
+            showPage('products');
+            showAlert('Products Page', 'Browse our complete collection of premium electronics. Use filters to find exactly what you need!', 'info');
+        }
+
+        function quickViewCart() {
+            if (cart.length === 0) {
+                showAlert('Empty Cart', 'Your cart is currently empty. Browse our products and add items to get started!', 'warning');
+                setTimeout(() => showPage('products'), 2000);
+            } else {
+                toggleCart();
+                showAlert('Shopping Cart', `You have ${cart.length} item(s) in your cart. Review and proceed to checkout when ready.`, 'info');
+            }
+        }
+
+        function quickContactSupport() {
+            showPage('contact');
+            showAlert('Customer Support', 'Our support team is here to help! Fill out the form below or use our contact information for immediate assistance.', 'info');
+        }
+
+        function quickTrackOrder() {
+            if (orders.length === 0) {
+                showAlert('No Orders Found', 'You haven\'t placed any orders yet. Shop our products to get started!', 'warning');
+                setTimeout(() => showPage('products'), 2000);
+            } else {
+                showTrackingModal();
+                showAlert('Order Tracking', 'Enter your tracking number to get real-time updates on your order status and delivery information.', 'info');
+            }
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            notification.textContent = message;
+            notification.className = `notification ${type}`;
+            notification.classList.add('show');
+
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 4000);
+        }
+
+        // Lazy Loading Implementation
+        function setupLazyLoading() {
+            const images = document.querySelectorAll('.lazy-load');
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.classList.add('loaded');
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            images.forEach(img => imageObserver.observe(img));
+        }
+
+        // Performance Optimization: Debounced Resize Handler
+        let resizeTimeout;
+        window.addEventListener('resize', function() {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                console.log('Layout recalculated for new viewport size');
+            }, 250);
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', function(event) {
+            const modals = ['cartModal', 'bookingModal', 'trackingModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Keyboard navigation support
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = ['cartModal', 'bookingModal', 'trackingModal'];
+                modals.forEach(modalId => {
+                    const modal = document.getElementById(modalId);
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                    }
+                });
+            }
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9842041d00cf93c1',t:'MTc1ODcxNDEyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
